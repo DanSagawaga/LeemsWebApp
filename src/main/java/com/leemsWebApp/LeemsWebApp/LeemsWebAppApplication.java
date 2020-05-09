@@ -15,7 +15,6 @@ public class LeemsWebAppApplication {
 
 	public static void main(String[] args) throws Exception{
 		SpringApplication.run(LeemsWebAppApplication.class, args);
-
 	}
 
 }
