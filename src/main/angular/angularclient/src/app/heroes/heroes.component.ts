@@ -1,33 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { Hero } from '../Hero';
+import { Hero } from '../hero';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
-
+import { HeroService} from "../service/hero.service";
+import { MessageService} from "../service/message.service";
 
 @Component({
-  selector: 'app-heroes', // Selector for CSS
+  selector: 'app-heroes',
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
+  heroes: Hero[];
 
-  heroes: Hero[] = [
-    { id: 11, name: 'Dr Nice' },
-    { id: 12, name: 'Narco' },
-    { id: 13, name: 'Bombasto' },
-    { id: 14, name: 'Celeritas' },
-    { id: 15, name: 'Magneta' },
-    { id: 16, name: 'RubberMan' },
-    { id: 17, name: 'Dynama' },
-    { id: 18, name: 'Dr IQ' },
-    { id: 19, name: 'Magma' },
-    { id: 20, name: 'Tornado' }
-  ];
-  constructor() { }
+  constructor(private heroService: HeroService) { }
 
-  selectedHero: Hero;
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
+  ngOnInit() {
+    this.getHeroes();
   }
-  ngOnInit(): void {}
+
+  getHeroes(): void {
+    this.heroService.getHeroes()
+      .subscribe(heroes => this.heroes = heroes);
+  }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.heroService.addHero({ name } as Hero)
+      .subscribe(hero => {
+        this.heroes.push(hero);
+      });
+  }
+
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
+  }
 
 }
