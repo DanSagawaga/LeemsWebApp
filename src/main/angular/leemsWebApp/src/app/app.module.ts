@@ -1,19 +1,32 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { ToastrModule } from "ngx-toastr";
 
-import { AppRoutingModule } from './app-routing.module';
+import { SidebarModule } from './sidebar/sidebar.module';
+import { FooterModule } from './shared/footer/footer.module';
+import { NavbarModule} from './shared/navbar/navbar.module';
+
 import { AppComponent } from './app.component';
-import { NavigationBarComponent} from "../navigation-bar/navigation-bar.component";
-import { ImageService} from "../service/image-service.service";
+import { AppRoutes } from './app.routing';
+
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationBarComponent
+    AdminLayoutComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(AppRoutes,{
+      useHash: true
+    }),
+    SidebarModule,
+    NavbarModule,
+    ToastrModule.forRoot(),
+    FooterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

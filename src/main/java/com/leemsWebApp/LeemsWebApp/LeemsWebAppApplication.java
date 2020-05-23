@@ -13,8 +13,12 @@ import java.util.stream.Collectors;
 @SpringBootApplication
 public class LeemsWebAppApplication {
 
+	private static final TwitterApiManager twitterApiManager = new TwitterApiManager();
+
 	public static void main(String[] args) throws Exception{
-		SpringApplication.run(LeemsWebAppApplication.class, args);
+
+		twitterApiManager.makeTwitterCall();
+		//SpringApplication.run(LeemsWebAppApplication.class, args);
 	}
 
 }
